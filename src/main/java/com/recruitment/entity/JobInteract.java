@@ -1,39 +1,34 @@
 package com.recruitment.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+@SuppressWarnings("serial")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Role {
-	
+@Table(name="jop_interact")
+public class JobInteract implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	Integer id;
-	String role_code;
-	String name;
-	Timestamp create_date;
-	Boolean is_del;
+	private int id;
+	private int watched_by;
+	private int follow_by;
+	private Timestamp create_date;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "role")
-	List<Authority> authorities;
+	@ManyToOne
+	@JoinColumn(name="job_id")
+	private Jobs jobs;
 }

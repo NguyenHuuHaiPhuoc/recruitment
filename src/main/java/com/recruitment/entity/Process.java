@@ -1,8 +1,8 @@
 package com.recruitment.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,31 +10,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@SuppressWarnings("serial")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name="authorities", uniqueConstraints = 
-	{@UniqueConstraint(columnNames = {"account_id", "role_id"})})
-public class Authority {
+@Table(name="process")
+public class Process implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	Integer id;
-	
-	Timestamp create_date;
-	
-	@ManyToOne
-	@JoinColumn(name="account_id")
-	private Account account;
+	private int id;
+	private String step;
+	private String process_content;
+	private Timestamp create_date;
 	
 	@ManyToOne
-	@JoinColumn(name="role_id")
-	private Role role;
+	@JoinColumn(name="job_id")
+	private Jobs jobs;
+
+	@Override
+	public String toString() {
+		return "Process [id=" + id + ", step=" + step + ", process_content=" + process_content + ", create_date="
+				+ create_date + ", jobs=" + jobs + "]";
+	}
 }
